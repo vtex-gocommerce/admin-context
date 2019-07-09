@@ -1,0 +1,24 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@gocommerce/utils": "^0.6.9",
+    "axios": "^0.17.1",
+    "cookie": "0.3.1",
+    "js-md5": "0.7.3",
+    "jwt-js": "0.5.0",
+    "uuid": "3.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "10.12.1",
+    "@types/cookie": "^0.3.2",
+    "@types/js-md5": "^0.4.2",
+    "@vtex/api": "^3.15.0"
+  }
+}

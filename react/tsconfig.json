@@ -1,6 +1,4 @@
 {
-  "include": ["./*", "./../../@types"],
-  "extends": "./../../@types/tsconfig",
   "compilerOptions": {
     "noImplicitAny": false,
     "module": "commonjs",
@@ -9,5 +7,6 @@
     "lib": ["dom", "es7"],
     "experimentalDecorators": true
   },
-  "lib": ["dom", "es7"]
+  "lib": ["dom", "es7"],
+  "include": ["typings.d.ts", "./**/*"]
 }

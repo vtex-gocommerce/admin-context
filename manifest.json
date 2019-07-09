@@ -1,16 +1,39 @@
 {
   "name": "gc-context",
   "vendor": "gocommerce",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "title": "GoCommece Context",
   "description": "",
   "mustUpdateAt": "2018-04-05",
   "categories": [],
-  "registries": ["smartcheckout", "gocommerce"],
+  "registries": [
+    "smartcheckout",
+    "gocommerce"
+  ],
   "settingsSchema": {},
-  "dependencies": {},
+  "dependencies": {
+    "gocommerce.styleguide": "2.x"
+  },
   "credentialType": "absolute",
   "builders": {
-    "react": "3.x"
-  }
+    "react": "3.x",
+    "graphql": "1.x",
+    "node": "4.x"
+  },
+  "policies": [
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.gocommerce.com",
+        "path": "*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "splunk-heavyforwarder-public.vtex.com"
+      }
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
