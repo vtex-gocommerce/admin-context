@@ -50,7 +50,13 @@ export default class GlobalNotifications extends React.Component<GlobalNotificat
         id: 0,
         isClosed: false
       }
-    }))
+    }), () =>
+      window.top.postMessage({
+        type: 'loading',
+        status: this.state.isGraphQlLoaderEnabled,
+        loaders: this.state.graphQlLoaders,
+      }, window.location.origin)
+    )
   }
 
   disableGraphQlLoader = (id: string) => {
@@ -60,7 +66,13 @@ export default class GlobalNotifications extends React.Component<GlobalNotificat
         isGraphQlLoaderEnabled: false,
         graphQlLoaders: Functions.removeValueInArrayNoIndex(id, prevState.graphQlLoaders)
       }
-    }))
+    }), () =>
+      window.top.postMessage({
+        type: 'loading',
+        status: this.state.isGraphQlLoaderEnabled,
+        loaders: this.state.graphQlLoaders,
+      }, window.location.origin)
+    )
   }
 
   resetAlert = () => {
