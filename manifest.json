@@ -18,7 +18,8 @@
   "builders": {
     "react": "3.x",
     "graphql": "1.x",
-    "node": "4.x"
+    "node": "4.x",
+    "pages": "1.x"
   },
   "policies": [
     {
