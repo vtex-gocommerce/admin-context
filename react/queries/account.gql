@@ -1,0 +1,37 @@
+query getAccount {
+  adminAccount {
+    contract
+    id
+    externalId
+    title
+    contractTitle
+    contractHost
+    name
+    defaultHost
+    host
+    country
+    isActive
+    isProvisioned
+    hasBillingConfigured
+    defaultLocale
+    salesChannels {
+      id
+      name
+      isActive
+      countryCode
+      cultureInfo
+      timeZone
+      currencyCode
+      currencySymbol
+      currencyLocale
+      currencyFormatInfo {
+        currencyDecimalDigits
+        currencyDecimalSeparator
+        currencyGroupSeparator
+        currencyGroupSize
+        startsWithCurrencySymbol
+      }
+      position
+    }
+  }
+}
