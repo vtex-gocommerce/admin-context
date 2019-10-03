@@ -12,7 +12,8 @@
   ],
   "settingsSchema": {},
   "dependencies": {
-    "gocommerce.styleguide": "2.x"
+    "gocommerce.styleguide": "2.x",
+    "gocommerce.admin-profile-graphql": "1.x"
   },
   "credentialType": "absolute",
   "builders": {
