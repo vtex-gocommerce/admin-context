@@ -8,9 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@gocommerce/utils": "^0.6.9",
-    "axios": "^0.17.1",
-    "uuid": "3.2.1"
+    "@gocommerce/utils": "^0.6.9"
   },
   "devDependencies": {
     "@types/node": "10.12.1",
