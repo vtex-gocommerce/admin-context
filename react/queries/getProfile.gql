@@ -1,0 +1,7 @@
+query getProfile($email: String) {
+  getUserData(email: $email) @context(provider: "gocommerce.admin-profile-graphql") {
+    name
+    picture
+    email
+  }
+}

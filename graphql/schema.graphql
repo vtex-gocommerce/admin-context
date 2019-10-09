@@ -44,16 +44,8 @@ type UserErrors {
   data: String
 }
 
-type User {
-  avatar: String
-  email: String
-  name: String
-  createdAt: String
-}
-
 type Query {
   adminAccount: Account @smartcache
-  user: User @cacheControl(scope: PRIVATE)
 }
 
 type Mutation {
