@@ -1,5 +1,5 @@
 query getAccount {
-  adminAccount {
+  accountDetails @context(provider: "gocommerce.accounts-graphql") {
     contract
     id
     externalId
