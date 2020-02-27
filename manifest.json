@@ -13,29 +13,14 @@
   "settingsSchema": {},
   "dependencies": {
     "gocommerce.styleguide": "2.x",
-    "gocommerce.admin-profile-graphql": "1.x"
+    "gocommerce.admin-profile-graphql": "1.x",
+    "gocommerce.accounts-graphql": "0.x"
   },
   "credentialType": "absolute",
   "builders": {
     "react": "3.x",
-    "graphql": "1.x",
-    "node": "4.x",
     "pages": "1.x"
   },
-  "policies": [
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "api.gocommerce.com",
-        "path": "*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "splunk-heavyforwarder-public.vtex.com"
-      }
-    }
-  ],
+  "policies": [],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }

@@ -8,7 +8,7 @@ import { defaultCurrencyType, defaultAccount } from './types'
 interface HandleAccountProps {
   AccountContext: any
   getAccount: {
-    adminAccount: any
+    accountDetails: any
     loading: boolean
     refetch: Function
     error: any
@@ -34,12 +34,12 @@ class SetAccountData extends React.Component<HandleAccountProps, any> {
       return <FullPageStatus status="loading" />
     }
     // Return erro when account was not found
-    if(!this.props.getAccount || this.props.getAccount.error || !this.props.getAccount.adminAccount || !this.props.getAccount.adminAccount.id) {
+    if(!this.props.getAccount || this.props.getAccount.error || !this.props.getAccount.accountDetails || !this.props.getAccount.accountDetails.id) {
       console.log('ERROR: ', this.props.getAccount)
       return <FullPageStatus status="error" showText={true} />
     }
     const accountData: defaultCurrencyType = this.buildStoreData(
-      this.props.getAccount && this.props.getAccount.adminAccount ? this.props.getAccount.adminAccount : null
+      this.props.getAccount && this.props.getAccount.accountDetails ? this.props.getAccount.accountDetails : null
     )
     // Don't allow access admin through custom host
     if(accountData && accountData.host && accountData.host === (window.location && window.location.host)) {
