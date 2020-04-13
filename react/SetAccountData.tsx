@@ -34,13 +34,13 @@ const SetAccountData = (props: React.PropsWithChildren<HandleAccountProps>) => {
   const redirectToWizard = (currentDomain: string) => {
     setForceLoading(true)
     Cookies.remove('gc_firstAccess', { domain: currentDomain })
-    window.location.pathname = '/admin/wizard'
+    window.location.pathname = '/admin/wizard/vtex-local'
   }
 
   useEffect(() => {
     if (
-      window.location.hostname.indexOf('app.') !== 0 &&
-      Cookies.get('_ssid') &&
+      window?.location?.hostname?.indexOf('app.') !== 0 &&
+      window?.location?.pathname?.indexOf('/admin/auth') < 0 &&
       Cookies.get('gc_firstAccess')
     ) {
       const currentDomain = window.location.hostname.split('.').slice(1).join('.')
