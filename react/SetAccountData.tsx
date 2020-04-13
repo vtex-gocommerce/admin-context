@@ -38,7 +38,11 @@ const SetAccountData = (props: React.PropsWithChildren<HandleAccountProps>) => {
   }
 
   useEffect(() => {
-    if (Cookies.get('gc_firstAccess')) {
+    if (
+      window.location.hostname.indexOf('app.') !== 0 &&
+      Cookies.get('_ssid') &&
+      Cookies.get('gc_firstAccess')
+    ) {
       const currentDomain = window.location.hostname.split('.').slice(1).join('.')
       if (
         Cookies.get('gc_createdAccountDomain') &&
