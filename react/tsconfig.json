@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "module": "esnext",
     "target": "es2017",
     "jsx": "preserve",
-    "lib": ["dom", "es7"],
-    "experimentalDecorators": true
+    "lib": ["dom", "es2017"],
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types", "node_modules/@gocommerce"]
   },
-  "lib": ["dom", "es7"],
-  "include": ["typings.d.ts", "./**/*"]
+  "lib": ["dom", "es2017"]
 }

@@ -1,0 +1,7 @@
+mutation setAccountSeller {
+  setAccountSeller @context(provider: "gocommerce.accounts-graphql") {
+    sponsor
+    invite
+    storeDocument
+  }
+}

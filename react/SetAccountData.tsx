@@ -1,65 +1,95 @@
-import * as React from 'react'
-import { graphql, compose } from 'react-apollo'
-// import { FormattedMessage } from 'react-intl'
-import getAccount from './queries/account.gql'
-import FullPageStatus from './utils/fullPageStatus'
+import React, { useState, useEffect } from 'react'
+import { useQuery, useMutation } from 'react-apollo'
+import Cookies from 'js-cookie'
+
 import { defaultCurrencyType, defaultAccount } from './types'
+import FullPageStatus from './utils/fullPageStatus'
+
+import GET_ACCOUNT from './queries/account.gql'
+import SET_ACCOUNT_SELLER from './queries/setAccountSeller.gql'
+
+const buildStoreData = (accountData: defaultCurrencyType) => (accountData ? {
+  currencySpec:
+    accountData && accountData.salesChannels && accountData.salesChannels.length > 0
+      && {
+          currencySymbol: accountData.salesChannels[0].currencySymbol,
+          currencyFormatInfo: accountData.salesChannels[0].currencyFormatInfo
+      },
+  ...accountData
+} : {
+  ...defaultAccount
+})
 
 interface HandleAccountProps {
   AccountContext: any
-  getAccount: {
-    accountDetails: any
-    loading: boolean
-    refetch: Function
-    error: any
-  }
 }
 
-class SetAccountData extends React.Component<HandleAccountProps, any> {
-  buildStoreData = accountData => (accountData ? {
-    currencySpec:
-      accountData && accountData.salesChannels && accountData.salesChannels.length > 0
-        && {
-            currencySymbol: accountData.salesChannels[0].currencySymbol,
-            currencyFormatInfo: accountData.salesChannels[0].currencyFormatInfo
-        },
-    ...accountData
-  } : {
-    ...defaultAccount
-  })
+const SetAccountData = (props: React.PropsWithChildren<HandleAccountProps>) => {
+  const [forceLoading, setForceLoading] = useState(false)
+  const { data, loading, error, refetch } = useQuery(GET_ACCOUNT)
+  const [setSellerInfo, {
+    loading: mutationLoading,
+  }] = useMutation(SET_ACCOUNT_SELLER)
 
-  render() {
-    // Show loading if account is not ready yet
-    if(this.props.getAccount && this.props.getAccount.loading) {
-      return <FullPageStatus status="loading" />
-    }
-    // Return erro when account was not found
-    if(!this.props.getAccount || this.props.getAccount.error || !this.props.getAccount.accountDetails || !this.props.getAccount.accountDetails.id) {
-      console.log('ERROR: ', this.props.getAccount)
-      return <FullPageStatus status="error" showText={true} />
-    }
-    const accountData: defaultCurrencyType = this.buildStoreData(
-      this.props.getAccount && this.props.getAccount.accountDetails ? this.props.getAccount.accountDetails : null
-    )
-    // Don't allow access admin through custom host
-    if(accountData && accountData.host && accountData.host === (window.location && window.location.host)) {
-      window.location.pathname = '/'
-      return <FullPageStatus status="error" />
-    }
-    const refetch = this.props.getAccount && this.props.getAccount.refetch ? this.props.getAccount.refetch : () => {}
-    const { AccountContext, children } = this.props
-    return (
-      <AccountContext.Provider value={{ accountData, refetch, query: getAccount }}>{children}</AccountContext.Provider>
-    )
+  const redirectToWizard = (currentDomain: string) => {
+    setForceLoading(true)
+    Cookies.remove('gc_firstAccess', { domain: currentDomain })
+    window.location.pathname = '/admin/wizard/vtex-local'
   }
+
+  useEffect(() => {
+    if (
+      window?.location?.hostname?.indexOf('app.') !== 0 &&
+      window?.location?.pathname?.indexOf('/admin/auth') < 0 &&
+      Cookies.get('gc_firstAccess')
+    ) {
+      const currentDomain = window.location.hostname.split('.').slice(1).join('.')
+      if (
+        Cookies.get('gc_createdAccountDomain') &&
+        Cookies.get('gc_sponsor') &&
+        Cookies.get('gc_invitation')
+      ) {
+        setSellerInfo().then(({ data }) => {
+          if (data?.setAccountSeller?.invite) {
+            Cookies.remove('gc_createdAccountDomain', { domain: currentDomain })
+            Cookies.remove('gc_sponsor', { domain: currentDomain })
+            Cookies.remove('gc_invitation', { domain: currentDomain })
+            Cookies.remove('gc_document', { domain: currentDomain })
+          } else {
+            console.log(data)
+          }
+          redirectToWizard(currentDomain)
+        }).catch((e) => {
+          console.log(e)
+          redirectToWizard(currentDomain)
+        })
+      } else {
+        redirectToWizard(currentDomain)
+      }
+    }
+  }, [])
+
+  // Show loading if account is not ready yet
+  if(loading || mutationLoading || forceLoading) {
+    return <FullPageStatus status="loading" />
+  }
+  // Return erro when account was not found
+  if(error || !data.accountDetails || !data.accountDetails.id) {
+    console.log('ERROR: ', data)
+    return <FullPageStatus status="error" showText={true} />
+  }
+  const accountData: defaultCurrencyType = buildStoreData(
+    data?.accountDetails ? data.accountDetails : null
+  )
+  // Don't allow access admin through custom host
+  if(accountData && accountData.host && accountData.host === (window.location && window.location.host)) {
+    window.location.pathname = '/'
+    return <FullPageStatus status="error" />
+  }
+  const { AccountContext, children } = props
+  return (
+    <AccountContext.Provider value={{ accountData, refetch, query: GET_ACCOUNT }}>{children}</AccountContext.Provider>
+  )
 }
 
-export default compose(
-  graphql(getAccount, {
-    name: 'getAccount',
-    options: props => ({
-      variables: {},
-      errorPolicy: 'all'
-    })
-  })
-)(SetAccountData)
+export default React.memo(SetAccountData)
