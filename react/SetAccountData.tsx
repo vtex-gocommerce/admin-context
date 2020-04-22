@@ -32,16 +32,18 @@ const SetAccountData = (props: React.PropsWithChildren<HandleAccountProps>) => {
   }] = useMutation(SET_ACCOUNT_SELLER)
 
   const redirectToWizard = (currentDomain: string) => {
-    setForceLoading(true)
-    Cookies.remove('gc_firstAccess', { domain: currentDomain })
-    window.location.pathname = '/admin/wizard/vtex-local'
+    if (Cookies.get('gc_firstAccess')) {
+      setForceLoading(true)
+      Cookies.remove('gc_firstAccess', { domain: currentDomain })
+      window.location.pathname = '/admin/wizard/vtex-local'
+    }
   }
 
   useEffect(() => {
     if (
       window?.location?.hostname?.indexOf('app.') !== 0 &&
       window?.location?.pathname?.indexOf('/admin/auth') < 0 &&
-      Cookies.get('gc_firstAccess')
+      window?.location?.pathname?.indexOf('/admin/wizard') < 0
     ) {
       const currentDomain = window.location.hostname.split('.').slice(1).join('.')
       if (
