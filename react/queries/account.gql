@@ -33,5 +33,14 @@ query getAccount {
       }
       position
     }
+    register
+    address {
+      addressLine1
+      addressLine2
+      city
+      zipCode
+      country
+      state
+    }
   }
 }
