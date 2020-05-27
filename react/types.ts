@@ -21,6 +21,7 @@ export interface Container {
 export interface defaultCurrencyType {
   accountName: string
   contract: string
+  contractHost: string
   country: string
   currencySpec: {
     currencyFormatInfo: {
@@ -63,6 +64,7 @@ export interface defaultCurrencyType {
 export const defaultAccount: defaultCurrencyType = {
   accountName: '',
   contract: '',
+  contractHost: '',
   country: '',
   currencySpec: {
     currencyFormatInfo: {

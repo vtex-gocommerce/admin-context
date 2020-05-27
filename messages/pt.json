@@ -1,0 +1,7 @@
+{
+  "admin/error.Loading": "Carregando",
+  "admin/error.InternalServerError": "Ocorreu um erro, tente novamente mais tarde",
+  "admin/error.NetworkError": "Problema de conexão detectado, tente novamente mais tarde",
+  "admin/error.NotFound": "Ops! Parece que você está tentando acessar uma página que foi removida ou que nunca existiu",
+  "admin/error.WrongContract": "Domínio inválido, acesse através de \"{contractDomain}\""
+}

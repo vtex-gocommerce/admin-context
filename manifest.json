@@ -19,7 +19,8 @@
   "credentialType": "absolute",
   "builders": {
     "react": "3.x",
-    "pages": "1.x"
+    "pages": "1.x",
+    "messages": "1.x"
   },
   "policies": [],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
