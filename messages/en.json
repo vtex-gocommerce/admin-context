@@ -1,0 +1,7 @@
+{
+  "admin/error.Loading": "Loading",
+  "admin/error.InternalServerError": "An error has occurred, try again later",
+  "admin/error.NetworkError": "Network error detected, try again later",
+  "admin/error.NotFound": "Ops! It looks like you're trying to access a page that either has been deleted or never even existed",
+  "admin/error.WrongContract": "Invalid domain, access from \"{contractDomain}\""
+}

@@ -83,11 +83,16 @@ const SetAccountData = (props: React.PropsWithChildren<HandleAccountProps>) => {
   const accountData: defaultCurrencyType = buildStoreData(
     data?.accountDetails ? data.accountDetails : null
   )
-  // Don't allow access admin through custom host
-  if(accountData && accountData.host && accountData.host === (window.location && window.location.host)) {
+  // Don't allow access to admin through custom host
+  if(accountData?.host === window?.location?.host) {
     window.location.pathname = '/'
     return <FullPageStatus status="error" />
   }
+  // Don't allow access to admin from an domain different from the contract domain
+  if(accountData?.contractHost !== window?.location?.host?.split('.')?.slice(1)?.join('.')) {
+    return <FullPageStatus status="error" showText={true} contractDomain={accountData?.contractHost} />
+  }
+
   const { AccountContext, children } = props
   return (
     <AccountContext.Provider value={{ accountData, refetch, query: GET_ACCOUNT }}>{children}</AccountContext.Provider>

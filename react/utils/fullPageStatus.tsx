@@ -6,6 +6,7 @@ import errorSvg from '../assets/error404.svg'
 interface fullPageStatusProps {
   status: 'loading' | 'error' | 'notFound'
   showText?: boolean
+  contractDomain?: string
 }
 
 const fullPageStatus = (props:fullPageStatusProps) => (
@@ -15,7 +16,17 @@ const fullPageStatus = (props:fullPageStatusProps) => (
     ) : (
       <img src={errorSvg} />
     )}
-    {props.showText && (
+    {props.contractDomain && (
+      <p className="f3 w-60 tc g-mt10">
+        <FormattedMessage
+          id="admin/error.WrongContract"
+          defaultMessage="Invalid domain, access from {contractDomain}"
+          values={{
+            contractDomain: props.contractDomain
+          }}
+        />
+      </p>
+    ) || props.showText && (
       <p className="f3 w-60 tc g-mt10">
         <FormattedMessage id={messages[props.status].id} />
       </p>
