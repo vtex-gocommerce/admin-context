@@ -11,6 +11,7 @@ query getAccount {
     host
     country
     isActive
+    policies
     isProvisioned
     hasBillingConfigured
     defaultLocale
